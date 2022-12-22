@@ -5,6 +5,10 @@ import genres from './genres'
 import dotenv from 'dotenv';
 import movieModel from '../api/movies/movieModel';
 import movies from './movies.js';
+import showModel from '../api/shows/showModel';
+import shows from './shows.js';
+import upcomingModel from '../api/upcomingmovies/uMovieModel';
+import upcomingMovies from './upcomingmovies.js';
 
 dotenv.config();
 
@@ -33,7 +37,7 @@ async function loadUsers() {
   }
 }
 
-// deletes all user documents in collection and inserts test data
+// deletes all genre documents in collection and inserts test data
 async function loadGenres() {
   console.log('load genre Data');
   try {
@@ -45,8 +49,34 @@ async function loadGenres() {
   }
 }
 
+// deletes all show documents in collection and inserts test data
+async function loadShows() {
+  console.log('load show Data');
+  try {
+    await showModel.deleteMany();
+    await showModel.collection.insertMany(shows);
+    console.info(`${shows.length} shows were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load shows Data: ${err}`);
+  }
+}
+
+// deletes all upcoming movie documents in collection and inserts test data
+async function loadUpcomingMovies() {
+  console.log('load upcoming movies Data');
+  try {
+    await upcomingModel.deleteMany();
+    await upcomingModel.collection.insertMany(upcomingMovies);
+    console.info(`${upcomingMovies.length} upcoming movies were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load upcoming movies Data: ${err}`);
+  }
+}
+
 if (process.env.SEED_DB == 'true') {  
   loadUsers();
   loadGenres();//you may not need this line if you skipped the exercises
   loadMovies();//ADD THIS LINE
+  loadUpcomingMovies();
+  loadShows();
 }
