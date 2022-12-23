@@ -2,6 +2,7 @@ import chai from "chai";
 import request from "supertest";
 const mongoose = require("mongoose");
 import Show from "../../../../api/shows/showModel";
+import User from "../../../../api/users/userModel";
 import api from "../../../../index";
 import shows from "../../../../seedData/shows";
 
@@ -28,6 +29,23 @@ describe("Shows endpoint", () => {
     });
     afterEach(() => {
       api.close(); // Release PORT 8080
+    });
+
+    beforeEach(async () => {
+      try {
+        await User.deleteMany();
+        // Register two users
+        await request(api).post("/api/users?action=register").send({
+          username: "user1",
+          password: "test1",
+        });
+        await request(api).post("/api/users?action=register").send({
+          username: "user2",
+          password: "test2",
+        });
+      } catch (err) {
+        console.error(`failed to Load user test Data: ${err}`);
+      }
     });
 
     describe("GET /api/shows ", () => {
