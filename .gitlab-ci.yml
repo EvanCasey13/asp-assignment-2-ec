@@ -47,6 +47,7 @@ deploy_staging:
   only:
     - develop
   stage: staging
+  when: manual
   before_script:
     - apt-get update -qy
     - apt-get install -y ruby-dev

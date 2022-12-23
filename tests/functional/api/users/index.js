@@ -29,6 +29,23 @@ describe("Users endpoint", () => {
     }
   });
 
+  beforeEach(async () => {
+    try {
+      await User.deleteMany();
+      // Register two users
+      await request(api).post("/api/users?action=register").send({
+        username: "user1",
+        password: "test1",
+      });
+      await request(api).post("/api/users?action=register").send({
+        username: "user2",
+        password: "test2",
+      });
+    } catch (err) {
+      console.error(`failed to Load user test Data: ${err}`);
+    }
+  });
+
   afterEach(() => {
     api.close(); // Release PORT 8080
   });
