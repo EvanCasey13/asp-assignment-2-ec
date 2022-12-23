@@ -9,6 +9,8 @@ import showModel from '../api/shows/showModel';
 import shows from './shows.js';
 import upcomingModel from '../api/upcomingmovies/uMovieModel';
 import upcomingMovies from './upcomingmovies.js';
+import actorModel from '../api/actors/actorModel';
+import actors from './actors.js';
 
 dotenv.config();
 
@@ -73,10 +75,23 @@ async function loadUpcomingMovies() {
   }
 }
 
+// deletes all actor documents in collection and inserts test data
+async function loadActors() {
+  console.log('load Actors Data');
+  try {
+    await actorModel.deleteMany();
+    await actorModel.collection.insertMany(actors);
+    console.info(`${actors.length} actors were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load actor Data: ${err}`);
+  }
+}
+
 if (process.env.SEED_DB == 'true') {  
   loadUsers();
   loadGenres();//you may not need this line if you skipped the exercises
   loadMovies();//ADD THIS LINE
   loadUpcomingMovies();
   loadShows();
+  loadActors();
 }
