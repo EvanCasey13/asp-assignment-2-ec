@@ -1,12 +1,4 @@
-export const upcomingMovies = {
-    "upcomingMovies": [
-        {
-            "dates": {
-            "maximum": "2023-01-04",
-            "minimum": "2022-12-14"
-            },
-            "page": 1,
-            "results": [
+const upcomingMovies = [
             {
             "adult": false,
             "backdrop_path": "/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg",
@@ -399,9 +391,6 @@ export const upcomingMovies = {
             "vote_average": 7,
             "vote_count": 40
             }
-            ],
-            "total_pages": 19,
-            "total_results": 377
-            }
-    ]
-}
+         ]
+
+export default upcomingMovies;
