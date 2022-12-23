@@ -55,5 +55,5 @@ deploy_staging:
     - dpl --provider=heroku --app=$HEROKU_APP_NAME_STAGING --api-key=$HEROKU_API_KEY
     - echo "Deployed to staging server" 
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: manual
