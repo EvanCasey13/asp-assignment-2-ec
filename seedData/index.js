@@ -11,6 +11,8 @@ import upcomingModel from '../api/upcomingmovies/uMovieModel';
 import upcomingMovies from './upcomingmovies.js';
 import actorModel from '../api/actors/actorModel';
 import actors from './actors.js';
+import reviewModel from '../api/reviews/reviewModel.js';
+import reviews from './reviews.js';
 
 dotenv.config();
 
@@ -86,6 +88,18 @@ async function loadActors() {
     console.error(`failed to Load actor Data: ${err}`);
   }
 }
+// deletes all upcoming movie documents in collection and inserts test data
+
+async function loadReviews() {
+  console.log('load reviews Data');
+  try {
+    await reviewModel.deleteMany();
+    await reviewModel.collection.insertMany(reviews);
+    console.info(`${reviews.length} reviews were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load review Data: ${err}`);
+  }
+}
 
 if (process.env.SEED_DB == 'true') {  
   loadUsers();
@@ -94,4 +108,5 @@ if (process.env.SEED_DB == 'true') {
   loadUpcomingMovies();
   loadShows();
   loadActors();
+  loadReviews();
 }

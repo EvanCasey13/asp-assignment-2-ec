@@ -2,8 +2,8 @@ import chai from "chai";
 import request from "supertest";
 const mongoose = require("mongoose");
 import api from "../../../../index";
-import Movie from "../../../../api/movies/movieModel";
-import movies from "../../../../seedData/movies";
+import Review from "../../../../api/reviews/reviewModel";
+import reviews from "../../../../seedData/reviews";
 
 const expect = chai.expect;
 let db;
@@ -20,10 +20,10 @@ describe("Reviews endpoint", () => {
 
     beforeEach(async () => {
         try {
-          await Movie.deleteMany();
-          await Movie.collection.insertMany(movies);
+          await Review.deleteMany();
+          await Review.collection.insertMany(reviews);
         } catch (err) {
-          console.error(`failed to Load show Data: ${err}`);
+          console.error(`failed to Load review Data: ${err}`);
         }
       });
   
@@ -31,7 +31,7 @@ describe("Reviews endpoint", () => {
       api.close(); // Release PORT 8080
     });
 
-    describe("POST /api/shows ", () => {
+    describe("POST /api/reviews ", () => {
         it("should return a 200 status and a generated token", () => {
           return request(api)
             .post("/api/users?action=authenticate")
@@ -48,12 +48,12 @@ describe("Reviews endpoint", () => {
           });
         it("Should add a review and return a status of 201", () => {
         return request(api)
-          .post(`/api/reviews/user1/movie/${movies[0].id}/reviews`)
+          .post(`/api/reviews/user1/movie/590706/reviews`)
           .send({
             author: "user1",
             review: "Test review content",
             rating: 3, 
-            movie_id: movies[0].id
+            movie_id: 590706
           })
           .expect(201)
       });
